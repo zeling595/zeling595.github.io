@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>pass-by-value in Java | Hexo</title>
+  <title>Differences between variable, object and value in Java | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="IntroductionThis is my first technical blog on Java learning. I was reading the official Oracle Java Documentation online. While attempting an exercise, I encounter a problem which I would attribute t">
 <meta property="og:type" content="article">
-<meta property="og:title" content="pass-by-value in Java">
+<meta property="og:title" content="Differences between variable, object and value in Java">
 <meta property="og:url" content="http://yoursite.com/2019/12/26/pass-by-value-in-Java/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="IntroductionThis is my first technical blog on Java learning. I was reading the official Oracle Java Documentation online. While attempting an exercise, I encounter a problem which I would attribute t">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-12-26T03:46:42.000Z">
-<meta property="article:modified_time" content="2019-12-26T04:51:38.942Z">
+<meta property="article:modified_time" content="2019-12-26T06:47:38.000Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="java beginner">
 <meta name="twitter:card" content="summary">
@@ -162,7 +162,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      pass-by-value in Java
+      Differences between variable, object and value in Java
     </h1>
   
 
@@ -175,14 +175,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>This is my first technical blog on Java learning. I was reading the official Oracle Java Documentation online. While attempting an exercise, I encounter a problem which I would attribute to my misunderstanding of pass-by-value in Java. After doing some research, I believe that I find the explanation to my problem. I wanted to write it down in case I confuse myself in the future agian. This article is not about difference between pass-by-value and pass-by-reference. It is about difference between variable, object, value and how I approach it from pass-by-value in Java language. I an a novice to programming so I might be wrong. I shall update it constantly as I read more.</p>
+        <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>This is my first technical blog on Java learning. I was reading the official Oracle Java Documentation online. While attempting an exercise, I encounter a problem which I would attribute to my misunderstanding of pass-by-value in Java. After doing some research, I believe that I find the explanation to my problem. I wanted to write it down in case I confuse myself in the future agian. This article is about difference between variable, object, value and how I approach it from pass-by-value in Java language, and what I learned about pass-by-value in Java. I an a novice to programming so I might be wrong. I shall update it constantly as I read more.</p>
 <h2 id="The-Actual-Problem"><a href="#The-Actual-Problem" class="headerlink" title="The Actual Problem"></a>The Actual Problem</h2><p>#Question:#<br>The following code creates one array and one string object. How many references to those objects exist after the code executes? Is either object eligible for garbage collection?</p>
 <p>…<br>String[] students = new String[10];<br>String studentName = “Peter Smith”;<br>students[0] = studentName;<br>studentName = null;<br>…</p>
 <p>#Answer:#<br>There is one reference to the students array and that array has one reference to the string Peter Smith. Neither object is eligible for garbage collection. The array students is not eligible for garbage collection because it has one reference to the object studentName even though that object has been assigned the value null. The object studentName is not eligible either because students[0] still refers to it.</p>
 <p>So previously I was confused about why studentName is not garbage collected as it is set to null. According to the offical documentation, an object is eligible for garbage collection when there are no more references to that object, and we can explicitly make the variable eligible by setting the variable to null (another way is to make the variable goes out of scope, which is not relevant here). I thought the program is executed firstly creating a new array of type string and assign 10 spaces to it. Then, declaring a variable of type string and assign it the value of “Peter Smith”. There are two object in the program now. One is an array named students and the other is a string object named studentName. Move on to the next line, students[0] points to the value “Peter Smith”. Then object studentName is reassigned the value null. Therefore, I thought that studentName would be garbage collected in the end.</p>
-<p>However, my answer was wrong. Actually, in the second line, a string object is created. String is not exactly a primitive in Java, but it works like a primitive. So, no new operator is needed. The second statement works as a construction and declaration of variable at the same time. In this case, “studentName” is a <em>variable</em>. Here, the string <em>object</em> is given the name “studentName” which is a reference to it. And then, it is assigned the <em>value</em> “Peter Smith”. Moving on to the third line, student[0] is in fact pointing to the string object named “studentName”. After that, the explanation given by the anwser is very clear. Take note that studentNumber is not the actual object, it is just a reference to the object so that when we want to use the actual object, there is a method to get it.</p>
-<h2 id="Why-do-I-think-it-is-related-to-pass-by-value-in-Java"><a href="#Why-do-I-think-it-is-related-to-pass-by-value-in-Java" class="headerlink" title="Why do I think it is related to pass-by-value in Java"></a>Why do I think it is related to pass-by-value in Java</h2><p>I read from a post in StackOverflow, it says “Java is always pass-by-value. Unfortunately, when we pass the value of an object, we are passing the reference to it”. It makes perfect sense to me now. When we attempt to pass the value of an object, we need to pass the object to it. In order to pass the object, we need a reference to the object. Then, we pass the reference of the object to it since we cannot specifiy the object if it is nameless. Hence, I think when we say pass-by-value, we are passing the object refered as “SomeName” which holds the value.</p>
+<p>However, my answer was wrong. Actually, in the second line, a string object is created. String is not exactly a primitive in Java, but it works like a primitive. So, no new operator is needed. The second statement works as a construction and declaration of variable at the same time. In this case, “studentName” is a <em>variable</em>. Here, the string <em>object</em> is given the name “studentName” which is a reference to its address. And then, it is assigned the <em>value</em> “Peter Smith”. Moving on to the third line, student[0] is in fact pointing to the address of the string object named “studentName”. After that, the explanation given by the anwser is very clear. Take note that studentNumber is not the actual object, it is just a reference to the object so that when we want to use the actual object, there is a method to get it.</p>
+<h2 id="What-I-learned-about-pass-by-value-in-Java"><a href="#What-I-learned-about-pass-by-value-in-Java" class="headerlink" title="What I learned about pass-by-value in Java"></a>What I learned about pass-by-value in Java</h2><p>I read from a post in StackOverflow, it says “Java is always pass-by-value. Unfortunately, when we pass the value of an object, we are passing the reference to it”. It makes perfect sense to me now. When we attempt to pass the value of an object, we need to pass the address of the object to it. We don’t pass in the actual object. In order to pass the address of the object, we need a reference to the address of the object. Hence, I think when we say pass-by-value, we are passing the address of the object which is refered as the variable name. By doing so, we can pass the value of object to it. In method call, we create a copy of the reference to the address that the object is at.</p>
 <h2 id="Credits"><a href="#Credits" class="headerlink" title="Credits"></a>Credits</h2><p><a href="https://stackoverflow.com/questions/40480/is-java-pass-by-reference-or-pass-by-value" target="_blank" rel="noopener">https://stackoverflow.com/questions/40480/is-java-pass-by-reference-or-pass-by-value</a> </p>
+<p><a href="http://www.javadude.com/articles/passbyvalue.htm" target="_blank" rel="noopener">http://www.javadude.com/articles/passbyvalue.htm</a></p>
 
       
 
